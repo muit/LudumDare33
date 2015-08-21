@@ -17,12 +17,11 @@ public class SceneScript : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
     }
 
-
-
     void Start() {
-        CPlayer player = GameObject.FindObjectOfType<CPlayer>();
-        OnGameStart(player);
+        OnGameStart(FindObjectOfType<CPlayer>());
     }
 
+
+    //Events
     protected virtual void OnGameStart(CPlayer player) {}
 }
