@@ -12,4 +12,12 @@ public class menu : SceneScript {
     {
 	
 	}
+
+    public void Quit() {
+        Application.Quit();
+    }
+
+    public void LoadScene(int scene) {
+        Application.LoadLevelAsync(scene);
+    }
 }
