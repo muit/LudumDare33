@@ -1,13 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets._2D;
 
-[RequireComponent(typeof(PlatformerCharacter2D))]
+public class Character : Object {
+    public Team team = Team.FRUITS;
 
-public class Character : MonoBehaviour {
+    //Combat
+    protected Character target;
 
-	void Start () {
-        OnGameStart(SceneScript.Instance);
+    public bool isInCombat {
+        get { return target != null; }
+    }
+
+    public void StartCombat(Character unit) {
+        target = unit;
+    }
+
+    private void Fire()
+    {
+
     }
 
 
@@ -21,24 +31,23 @@ public class Character : MonoBehaviour {
 
     public void Damage(Character unit, int amount)
     {
-        if (IsAlive())
+        if (isAlive)
         {
             health -= amount;
             OnDamage(unit, amount);
-            if (!IsAlive())
+            if (!isAlive)
             {
                 JustDied(unit);
             }
         }
     }
 
-    public bool IsAlive() {
-        return health > 0;
+    public bool isAlive {
+        get { return health > 0; }
     }
 
 
     //Events
-    protected virtual void OnGameStart(SceneScript scene) { }
     protected virtual void OnDamage(Character unit, int amount) { }
     protected virtual void JustDied(Character killer) { }
     //protected virtual void OnCombatEnter(Character unit) { }
