@@ -6,6 +6,9 @@ public class CApple : Character {
 
     public float detectionDistance = 1;
 
+    public int minDrop = 0;
+    public int maxDrop = 3;
+
     protected override void OnGameStart(SceneScript scene)
     {
         agent = GetComponent<NavMeshAgent>();
@@ -35,6 +38,12 @@ public class CApple : Character {
             }
         }
     }
+
+    protected override void JustDied(Character killer)
+    {
+        Coin.Drop(transform.position, minDrop, maxDrop);
+    }
+
 
 
 

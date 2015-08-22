@@ -7,7 +7,8 @@ public class CameraMovement : MonoBehaviour {
     public float distance = 10;
     public float inclination = 45;
     public float yRotation = 180;
-    public float moveDamping = 3;
+    public float moveDamping = 2;
+    public float lookDamping = 2;
     public float teleportAtDistance = 100;
 
 	void LateUpdate () {
@@ -39,12 +40,19 @@ public class CameraMovement : MonoBehaviour {
         position.x += catet * Mathf.Cos(yRotation * 2 * Mathf.PI / 360);
         position.z += catet * Mathf.Sin(yRotation * 2 * Mathf.PI / 360);
 
-        transform.LookAt(trans);
+        //Smooth LookAt
+        Quaternion targetRotation = Quaternion.LookRotation(trans.position - transform.position);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lookDamping * Time.deltaTime);
 
+        //Temporal fix camera stutting
+        transform.position = position;
+
+        /*
         //Teleport camera if is too far
         if (Vector3.Distance(trans.position, transform.position) > teleportAtDistance)
             transform.position = position;
         else
             transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime * moveDamping);
+        */
     }
 }

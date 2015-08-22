@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OSpawn : Object {
-    public CPlayer playerPrefab;
+public class OSpawn : Item {
 
     protected override void OnGameStart(SceneScript scene)
     {
@@ -14,7 +13,7 @@ public class OSpawn : Object {
         {
             Vector3 position = transform.position;
             position.y += height;
-            return Instantiate(playerPrefab, position, transform.rotation) as CPlayer;
+            return Instantiate(Cache.Get.playerPrefab, position, transform.rotation) as CPlayer;
         }
         return null;
     }

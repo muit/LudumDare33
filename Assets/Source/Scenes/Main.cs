@@ -1,10 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum GenericClips
+{
+    AMBIENCE = 0,
+    COIN = 1
+}
+
 public class Main : SceneScript {
+
+    private AudioSource[] audioSources;
+
 
     protected override void BeforeGameStart()
     {
+        audioSources = GetComponents<AudioSource>();
         player = spawn.Spawn();
     }
 
@@ -13,11 +23,7 @@ public class Main : SceneScript {
         
     }
 
-    public void Quit() {
-        Application.Quit();
-    }
-
-    public void LoadScene(int scene) {
-        Application.LoadLevelAsync(scene);
+    public void PlaySound(GenericClips clip) {
+        audioSources[(int)clip].Play();
     }
 }

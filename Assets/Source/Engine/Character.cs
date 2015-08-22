@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Character : Object {
+public class Character : Item {
     public Team team = Team.FRUITS;
 
     //Combat
@@ -15,9 +15,8 @@ public class Character : Object {
         target = unit;
     }
 
-    private void Fire()
+    protected void Fire()
     {
-
     }
 
 

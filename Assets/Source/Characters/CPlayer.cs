@@ -17,6 +17,11 @@ public class CPlayer : Character {
 	void Update () {
         Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Rotate();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
 	}
 
     private void Move(float h,float v) {

@@ -2,6 +2,17 @@
 using System.Collections;
 
 public class Coin : PickUp {
+    public static void Drop(Vector3 position, int min = 0, int max = 1) {
+        int amount = Random.Range(min, max);
+        for(int i = 0; i < amount; i++) {
+            Coin coin = Item.Instantiate(Cache.Get.coinPrefab, position, Quaternion.identity) as Coin;
+            Rigidbody rigidbody = coin.GetComponent<Rigidbody>();
+            if (rigidbody)
+            {
+                rigidbody.velocity = new Vector3(Random.Range(-4f, 4f), 7, Random.Range(-4f, 4f));
+            }
+        }
+    }
 
 	protected override void Start () {
         base.Start();
@@ -9,11 +20,11 @@ public class Coin : PickUp {
 	}
     
     void OnTriggerEnter(Collider col) {
-        Character player = col.GetComponent<CPlayer>();
+        CPlayer player = col.GetComponent<CPlayer>();
         if (player)
         {
             //player.CollectMoney(this);
-            //Game.Get().coins.PlaySound();
+            ((Main)Main.Instance).PlaySound(GenericClips.COIN);
             GameObject.Destroy(gameObject, 0.1f);
         }
     }
