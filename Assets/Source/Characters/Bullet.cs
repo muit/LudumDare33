@@ -57,6 +57,12 @@ public class Bullet : Item {
         if (unit as Bullet) return;
         if (unit == caster) return;
 
+        Character character = unit as Character;
+        if (character && character.team != caster.team)
+        {
+            caster.Hit(character);
+        }
+
         direction = Vector3.zero;
         rigidbody.velocity = Vector2.zero;
         gameObject.SetActive(false);

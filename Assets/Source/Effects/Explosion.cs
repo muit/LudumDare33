@@ -12,4 +12,9 @@ public class Explosion : MonoBehaviour {
     {
         Instantiate(Cache.Get.explosion, position, Quaternion.Euler(0, Random.Range(0, 360), 0));
     }
+
+    public static void CreateSmall(Vector3 position)
+    {
+        Instantiate(Cache.Get.smallExplosion, position, Quaternion.Euler(0, Random.Range(0, 360), 0));
+    }
 }

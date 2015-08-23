@@ -10,6 +10,7 @@ public class Cache : MonoBehaviour {
     public Coin coin;
     public Bullet bullet;
     public Explosion explosion;
+    public Explosion smallExplosion;
 
     //Singletone
     private static Cache instance;

@@ -25,8 +25,9 @@ public class Coin : PickUp {
         CPlayer player = col.GetComponent<CPlayer>();
         if (player)
         {
-            //player.CollectMoney(this);
-            ((Main)Main.Instance).PlaySound(GenericClips.COIN);
+            Main scene = ((Main)Main.Instance);
+            scene.CollectCoin();
+            scene.PlaySound(GenericClips.COIN);
             GameObject.Destroy(gameObject, 0.1f);
         }
     }

@@ -26,7 +26,7 @@ public class SphereExploder : Exploder {
                     }
                 }
 			}
-			collider.isTrigger = false;
+			//collider.isTrigger = false;
 			yield return new WaitForEndOfFrame();
 		}
 	}

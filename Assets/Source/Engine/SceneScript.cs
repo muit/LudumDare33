@@ -5,13 +5,6 @@ public class SceneScript : MonoBehaviour
     // Static singleton property
     public static SceneScript Instance { get; private set; }
 
-    [System.NonSerialized]
-    public ISpawn spawn;
-    [System.NonSerialized]
-    public CPlayer player;
-    [System.NonSerialized]
-    public CameraMovement camera;
-
     void Awake()
     {
         // Check if there are any other instances conflicting
@@ -23,6 +16,13 @@ public class SceneScript : MonoBehaviour
 
         //DontDestroyOnLoad(gameObject);
     }
+
+    [System.NonSerialized]
+    public ISpawn spawn;
+    [System.NonSerialized]
+    public CPlayer player;
+    [System.NonSerialized]
+    public CameraMovement camera;
 
     void Start()
     {

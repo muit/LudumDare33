@@ -42,14 +42,22 @@ public class CApple : Character {
         if (Vector3.Distance(target.transform.position, transform.position) < agent.stoppingDistance+1)
         {
             Kill();
-            agent.Stop();
         }
     }
 
     protected override void JustDied(Character killer)
     {
-        Coin.Drop(transform.position, minDrop, maxDrop);
-        Explosion.Create(transform.position);
+        agent.Stop();
+        if (killer)
+        {
+            Explosion.CreateSmall(transform.position);
+            Coin.Drop(transform.position, minDrop, maxDrop);
+        }
+        else
+        {
+            Explosion.Create(transform.position);
+            ((Main)Main.Instance).LooseLive();
+        }
     }
 
 

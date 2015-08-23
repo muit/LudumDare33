@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Character : Item {
     public Team team = Team.FRUITS;
+    public int minDamage = 4;
+    public int maxDamage = 5;
     public float despawnTime = 1500;
 
     //Combat
@@ -45,7 +47,11 @@ public class Character : Item {
         get { return _health > 0; }
     }
 
-    public void Damage(Character unit, int amount)
+    public void Hit(Character victim) {
+        victim.DamagedBy(this, Random.Range(minDamage, maxDamage));
+    }
+
+    public void DamagedBy(Character unit, int amount)
     {
         if (isAlive)
         {
@@ -53,13 +59,13 @@ public class Character : Item {
             OnDamage(unit, amount);
             if (!isAlive)
             {
-                JustDied(unit);
+                Kill(unit, false);
             }
         }
     }
 
-    public void Kill(Character killer = null) {
-        if (isAlive)
+    public void Kill(Character killer = null, bool requireAlive = true) {
+        if (!requireAlive || isAlive)
         {
             target = null;
             health = 0;
