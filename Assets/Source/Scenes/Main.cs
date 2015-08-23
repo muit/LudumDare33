@@ -4,7 +4,8 @@ using System.Collections;
 public enum GenericClips
 {
     AMBIENCE = 0,
-    COIN = 1
+    COIN = 1,
+    SHOT = 2
 }
 
 public class Main : SceneScript {

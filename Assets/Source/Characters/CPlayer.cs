@@ -42,7 +42,7 @@ public class CPlayer : Character {
 
         if (Physics.Raycast(ray, out hit, 200f, floorLayer))
         {
-            Vector3 direction = transform.position - hit.point;
+            Vector3 direction = hit.point - transform.position;
             direction.y = 0;
 
             Quaternion dirQ = Quaternion.LookRotation(direction);

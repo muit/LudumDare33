@@ -5,9 +5,11 @@ public class SceneScript : MonoBehaviour
     // Static singleton property
     public static SceneScript Instance { get; private set; }
 
-
-    public OSpawn spawn;
+    [System.NonSerialized]
+    public ISpawn spawn;
+    [System.NonSerialized]
     public CPlayer player;
+    [System.NonSerialized]
     public CameraMovement camera;
 
     void Awake()
@@ -24,7 +26,7 @@ public class SceneScript : MonoBehaviour
 
     void Start()
     {
-        spawn = FindObjectOfType<OSpawn>();
+        spawn = FindObjectOfType<ISpawn>();
         BeforeGameStart();
 
         if (!player)

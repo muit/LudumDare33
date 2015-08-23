@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class CApple : Character {
     private NavMeshAgent agent;
-
-    public float detectionDistance = 1;
+    private AIRangeDetection detection;
 
     public int minDrop = 0;
     public int maxDrop = 3;
@@ -12,58 +12,45 @@ public class CApple : Character {
     protected override void OnGameStart(SceneScript scene)
     {
         agent = GetComponent<NavMeshAgent>();
-        
-        SphereCollider[] distanceTriggers = GetComponents<SphereCollider>();
-        foreach (SphereCollider trigger in distanceTriggers)
-        {
-            if (trigger.isTrigger)
-            {
-                float radiusScale = (transform.localScale.x + transform.localScale.y + transform.localScale.z)/3;
-                trigger.radius = detectionDistance / radiusScale;
-            }
-        }
+
+        detection = GetComponentInChildren<AIRangeDetection>();
+        detection.Load(this);
     }
 
     void Update()
     {
-        if (isInCombat)
+        if (!isAlive) return;
+
+        if (!isInCombat)
+        {
+            //Find next enemy
+            if (detection.haveEnemies)
+            {
+                StartCombat(detection.GetNextEnemy());
+            }
+            return;
+        }
+
+
+        //Combat AI
+
+        if((target.transform.position - agent.destination).sqrMagnitude > 1)
         {
             agent.SetDestination(target.transform.position);
         }
-        else
+
+        if (Vector3.Distance(target.transform.position, transform.position) < agent.stoppingDistance+1)
         {
-            if (nearEnemyCharacters.Count > 0)
-            {
-                StartCombat(nearEnemyCharacters.Find(x => x != target));
-            }
+            Kill();
+            agent.Stop();
         }
     }
 
     protected override void JustDied(Character killer)
     {
         Coin.Drop(transform.position, minDrop, maxDrop);
+        Explosion.Create(transform.position);
     }
 
 
-
-
-    //Near Enemies
-    List<Character> nearEnemyCharacters = new List<Character>();
-
-    void OnTriggerEnter(Collider col)
-    {
-        Character unit = col.GetComponent<CPlayer>();
-        if (unit && unit.team != team) {
-            nearEnemyCharacters.Add(unit);
-        }
-    }
-
-    void OnTriggerExit(Collider col)
-    {
-        Character unit = col.GetComponent<CPlayer>();
-        if (unit)
-        {
-            nearEnemyCharacters.Remove(unit);
-        }
-    }
 }

@@ -2,10 +2,14 @@
 using System.Collections;
 
 public class Cache : MonoBehaviour {
-    [Header("Prefabs")]
-    public CPlayer playerPrefab;
-    public Coin coinPrefab;
+    [Header("Character Prefabs")]
+    public CPlayer player;
+    public CApple apple;
 
+    [Header("Object Prefabs")]
+    public Coin coin;
+    public Bullet bullet;
+    public Explosion explosion;
 
     //Singletone
     private static Cache instance;

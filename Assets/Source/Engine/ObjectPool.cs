@@ -23,9 +23,11 @@ public class ObjectPool : List<Item> {
         else
         {
             item = this[0];
+            RemoveAt(0);
             item.transform.position = position;
             item.transform.rotation = rotation;
             item.Reset();
+            Add(item);
         }
         return item;
     }
