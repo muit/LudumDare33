@@ -16,8 +16,4 @@ public class Menu : SceneScript {
     public void Quit() {
         Application.Quit();
     }
-
-    public void LoadScene(int scene) {
-        Application.LoadLevelAsync(scene);
-    }
 }

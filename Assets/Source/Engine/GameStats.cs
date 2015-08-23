@@ -4,16 +4,19 @@ using System.Collections;
 public class GameStats : MonoBehaviour
 {
     // Static singleton property
-    public static GameStats Instance { get; private set; }
+    private static GameStats instance;
+    public static GameStats Get {
+        get { 
+            return instance ? instance : instance = FindObjectOfType<GameStats>();
+        } 
+        private set { instance = value; }
+    }
 
     void Awake()
     {
-        // Check if there are any other instances conflicting
-        if (Instance != null && Instance != this)
-        {
+        if (Get && Get != this) {
             Destroy(gameObject);
         }
-        Instance = this;
 
         DontDestroyOnLoad(gameObject);
     }

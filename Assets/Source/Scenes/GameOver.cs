@@ -5,10 +5,10 @@ public class GameOver : SceneScript {
 
     protected override void OnGameStart(CPlayer player)
     {
-        if (GameStats.Instance)
+        if (GameStats.Get)
         {
             UITextVariable coinsText = FindObjectOfType<UITextVariable>();
-            coinsText.numericValue = GameStats.Instance.coins;
+            coinsText.numericValue = GameStats.Get.coins;
         }
     }
 	
@@ -23,9 +23,5 @@ public class GameOver : SceneScript {
 
     public void GoGame() {
         LoadScene(1);
-    }
-
-    public void LoadScene(int scene) {
-        Application.LoadLevelAsync(scene);
     }
 }

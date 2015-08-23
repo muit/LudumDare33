@@ -43,6 +43,11 @@ public class SceneScript : MonoBehaviour
         OnGameStart(player);
     }
 
+    public void LoadScene(int scene)
+    {
+        Application.LoadLevelAsync(scene);
+    }
+
 
     //Events
     protected virtual void BeforeGameStart() { }

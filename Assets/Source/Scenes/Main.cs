@@ -23,8 +23,8 @@ public class Main : SceneScript {
 
     protected override void OnGameStart(CPlayer player)
     {
-        GameStats.Instance.lives = 3;
-        GameStats.Instance.coins = 0;
+        GameStats.Get.lives = 3;
+        GameStats.Get.coins = 0;
 
         RenderLives();
     }
@@ -35,7 +35,7 @@ public class Main : SceneScript {
     }
 
     public void RenderLives() {
-        int lives = GameStats.Instance.lives;
+        int lives = GameStats.Get.lives;
 
         UIHp[] images = gui.GetComponentsInChildren<UIHp>(true);
         for (var i = 0; i < images.Length; i++) {
@@ -53,11 +53,11 @@ public class Main : SceneScript {
 
     public void LooseLive()
     {
-        GameStats.Instance.lives--;
+        GameStats.Get.lives--;
         RenderLives();
     }
 
     public void CollectCoin() {
-        GameStats.Instance.coins++;
+        GameStats.Get.coins++;
     }
 }
