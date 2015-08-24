@@ -6,6 +6,9 @@ public class Character : Item {
     public int minDamage = 4;
     public int maxDamage = 5;
     public float despawnTime = 1500;
+    [SerializeField]
+    protected float speed = 6;
+    protected float speedModifier = 1;
 
     //Combat
     public Character target {
@@ -63,6 +66,16 @@ public class Character : Item {
             }
         }
     }
+
+
+    //Modifiers
+
+    public void SetSpeedModifier(float coef) {
+        speedModifier = coef;
+    }
+
+
+    //Others
 
     public void Kill(Character killer = null, bool requireAlive = true) {
         if (!requireAlive || isAlive)

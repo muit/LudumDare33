@@ -1,54 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-public class UIObject : MonoBehaviour {
-    public bool enabledOnStart = true;
-    public bool disableOnAction = true;
-    public StartEvent onStart;
+
+public class UIObject : MonoBehaviour
+{
+    public UnityEvent onStart;
+    public bool disableOnComplete = false;
+    public float disableDelay = 2.0f;
     [Space(20)]
-    public string[] listenKeys;
-    public float actionDelay = 0.0f;
-    public KeyPressEvent onKeyPress;
+    public int[] completeOnMouseClick;
+    public string[] completeOnKeys;
+    public string[] completeOnAxis;
+    public CompleteEvent onComplete;
+    
+    [System.NonSerialized]
+    public bool completed = false;
 
-    private bool enabled = true;
-
-    void Start()
-    {
-        enabled = enabledOnStart;
+    void Start() {
         onStart.Invoke();
     }
 
-    void Update() {
-        if (enabled)
+    void Update () {
+        if (!completed)
         {
-            for (int i = 0; i < listenKeys.Length; i++)
+            for (int i = 0; i < completeOnMouseClick.Length; i++)
             {
-                if (Input.GetKeyDown(listenKeys[i]))
+                if (Input.GetMouseButton(completeOnMouseClick[i]))
                 {
-                    StartCoroutine(KeyPress());
+                    StartCoroutine(Complete(disableDelay));
+                    return;
+                }
+            }
+
+            for (int i = 0; i < completeOnKeys.Length; i++)
+            {
+                if (Input.GetKey(completeOnKeys[i]))
+                {
+                    StartCoroutine(Complete(disableDelay));
+                    return;
+                }
+            }
+
+            for (int e = 0; e < completeOnAxis.Length; e += 1)
+            {
+                float value = Input.GetAxis(completeOnAxis[e]);
+                if (value > 0.1f || value < -0.1f)
+                {
+                    StartCoroutine(Complete(disableDelay));
                     return;
                 }
             }
         }
-    }
+  }
 
-    IEnumerator KeyPress()
+    IEnumerator Complete(float delay)
     {
-        yield return new WaitForSeconds(actionDelay);
-        onKeyPress.Invoke();
+        if (!completed)
+            completed = true;
+        yield return new WaitForSeconds(delay);
 
-        if (disableOnAction) enabled = false;
+        onComplete.Invoke();
+        if (disableOnComplete)
+            gameObject.SetActive(false);
     }
 
-
-
     [System.Serializable]
-    public class StartEvent : UnityEvent { };
-
-    [System.Serializable]
-    public class KeyPressEvent : UnityEvent { };
-
-    public void Enable(bool value = true) {
-        enabled = value;
-    }
+    public class CompleteEvent : UnityEvent { };
 }

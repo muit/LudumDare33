@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class CPlayer : Character {
-
-    public float speed = 3;
     public float rotateSpeed = 1;
     public LayerMask floorLayer;
 
@@ -30,7 +28,7 @@ public class CPlayer : Character {
             Vector3 velocity = rigidbody.velocity;
             velocity.x = 0;
             velocity.z = 0;
-            velocity += new Vector3(h, 0, v) * speed;
+            velocity += new Vector3(h, 0, v) * speed * speedModifier;
 
             rigidbody.velocity = velocity;
         }

@@ -5,6 +5,7 @@ public class Cache : MonoBehaviour {
     [Header("Character Prefabs")]
     public CPlayer player;
     public CApple apple;
+    public COrange orange;
 
     [Header("Object Prefabs")]
     public Coin coin;
